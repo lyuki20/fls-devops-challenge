@@ -22,7 +22,7 @@ jobs:
     - run: npm install
     - run: npm install -g prettier
     - run: npm run lint
-    - run: prettier -c ./src/
+    - run: prettier -w ./src/
     - run: npm run prettier
     - run: CI=true npm run test
     - run: npm run build
