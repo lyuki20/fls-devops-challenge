@@ -20,6 +20,7 @@ jobs:
         node-version: 15
         cache: 'npm'
     - run: npm install
+    - run: npm install -g prettier
     - run: npm run lint
     - run: prettier -c ./src/
     - run: npm run prettier
