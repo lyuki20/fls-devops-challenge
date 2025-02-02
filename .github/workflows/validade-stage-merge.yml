@@ -13,4 +13,4 @@ jobs:
           if [ "$GITHUB_BASE_REF" != "stage" ] ||  [ "GITHUB_HEAD_REF != "devel"]; then
             echo "PRs to stage must come from devel"
             exit 1
-          if 
+          fi
