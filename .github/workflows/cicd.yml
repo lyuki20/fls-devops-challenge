@@ -33,6 +33,18 @@ jobs:
     - run: CI=true npm run test
     - run: npm run build
 
+    - name: Sync build fodler to S3
+      if: github.ref_name == 'devel'
+      run: aws s3 sync build/ s3://lucatsutsumi-devel-bucket-website/
+      
+    - name: Sync build fodler to S3
+      if: github.ref_name == 'stage'
+      run: aws s3 sync build/ s3://lucatsutsumi-stage-bucket-website/
+
+    - name: Sync build fodler to S3
+      if: github.ref_name == 'prod'
+      run: aws s3 sync build/ s3://lucatsutsumi-prod-bucket-website/
+
   terraform:
 
     runs-on: ubuntu-latest
@@ -55,4 +67,8 @@ jobs:
     - name: Terraform Apply
       run: |
         cd ./terraform
+        echo "Branch is ${{ github.ref_name }}"
+        WORKSPACE=${{ github.ref_name }}"
+        terraform workspace new "$WORKSPACE" || true
+        terraform workspace select "$WORKSPACE"
         terraform apply -auto-approve -input=false
