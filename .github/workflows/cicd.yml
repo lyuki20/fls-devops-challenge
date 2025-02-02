@@ -19,6 +19,12 @@ jobs:
       with:
         node-version: 15
         cache: 'npm'
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
     - run: npm install
     - run: npm install -g prettier
     - run: npm run lint
@@ -26,3 +32,27 @@ jobs:
     - run: npm run prettier
     - run: CI=true npm run test
     - run: npm run build
+
+  terraform:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+        
+    - uses: hashicorp/setup-terraform@v3
+    - name: Terraform init
+      run: |
+        cd ./terraform
+        terraform init
+
+    - name: Terraform Apply
+      run: |
+        cd ./terraform
+        terraform apply -auto-approve -input=false
