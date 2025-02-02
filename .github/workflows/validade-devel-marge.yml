@@ -13,4 +13,4 @@ jobs:
           if [[ ! "$GITHUB_HEAD_REF" =~ ^(feature|bugfix)./* ]]; then
             echo "PRs to devel must come from feature/* or bugfix/* branches!"
             exit 1
-          if 
+          fi
