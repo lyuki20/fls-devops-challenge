@@ -68,7 +68,7 @@ jobs:
       run: |
         cd ./terraform
         echo "Branch is ${{ github.ref_name }}"
-        WORKSPACE=${{ github.ref_name }}"
+        WORKSPACE=${{ github.ref_name }}
         terraform workspace new "$WORKSPACE" || true
         terraform workspace select "$WORKSPACE"
         terraform apply -auto-approve -input=false
