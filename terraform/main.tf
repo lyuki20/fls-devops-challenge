@@ -7,7 +7,7 @@ terraform {
 }
 
 resource "aws_s3_bucket" "website" {
-  bucket = "lucatsutsumi-bucket-website"
+  bucket = "lucatsutsumi-${terraform.workspace}-bucket-website"
 
 }
 
